@@ -29,6 +29,10 @@ functions:
       - http:
           path: game
           method: get
+          request:
+            parameters:
+              querystrings:
+                game: true
           cors: true
   storeGame:
     handler: handler.storeGame
@@ -36,6 +40,17 @@ functions:
       - http:
           path: game
           method: post
+          cors: true
+  deleteGame:
+    handler: handler.deleteGame
+    events:
+      - http:
+          path: game
+          method: delete
+          request:
+            parameters:
+              querystrings:
+                game: true
           cors: true
 
 resources:

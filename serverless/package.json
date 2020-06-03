@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.686.0",
-    "lodash": "^4.17.15",
-    "uuid": "^8.1.0"
+    "shortid": "^2.2.15"
   }
 }
