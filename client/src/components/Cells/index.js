@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 import useCells from '../../hooks/useCells'
 import { Wrapper, Code, CellsWrapper, Cell } from './components/Styled'
 
-const hasUncoveredMine = (cell) => {
-  return cell.state === 'uncovered' && cell.mine
-}
-
 function Cells({ initialCells }) {
   const [cells, gameOver, handleChange] = useCells(initialCells)
 
@@ -24,13 +20,15 @@ function Cells({ initialCells }) {
       <CellsWrapper>
         {cells.map((cell, i) =>
           <Cell key={i}
-            index={i} uncoveredMine={hasUncoveredMine(cell)}
+            index={i}
+            uncovered={cell.state === 'uncovered'}
+            hasMine={cell.mine}
             onClick={handleChange(i)}
             onContextMenu={handleChange(i)}
           >
             {{
-              'covered': '',
-              'uncovered': 'cc',
+              'covered': cell.mine ? 'M' : '',
+              'uncovered': cell.adjacentMines > 0 && cell.adjacentMines,
               'flagged': 'f',
             }[cell.state]}
           </Cell>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { getRemoteCells, setRemoteCells, createGame } from '../services/api'
 import { getDefaultCells } from '../helpers/cells'
 

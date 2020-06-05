@@ -16,6 +16,7 @@ export const getRemoteCells = async (game) => {
 }
 
 export const setRemoteCells = async (cells, gameId) => {
+  console.log('Setting remote cells...')
   try {
     const { data: { game } } = await axios.post(`/game`, {
       game: gameId || undefined,
