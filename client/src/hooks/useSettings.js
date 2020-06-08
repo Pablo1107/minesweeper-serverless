@@ -21,7 +21,6 @@ export default function useSettings(
   const handleInputChange = (event) => {
     const { target: { name, value } } = event
     event.persist()
-    console.log(value)
     setInputs(inputs => ({
       ...inputs,
       [name]: parseInt(value)

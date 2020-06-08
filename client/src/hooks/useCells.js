@@ -14,7 +14,7 @@ export default function useCells(defaultValue) {
   const uncoverCell = (cell, newCells) => {
     cell.state = 'uncovered'
     if (cell.adjacentMines === 0 && !cell.mine) {
-      console.log('Checking adjacentZeros')
+      console.log('Checking adjacent zeros')
       adjacentCells(cell, newCells, settings.n).forEach(adjCell => {
         if (adjCell.state === 'covered') {
           uncoverCell(adjCell, newCells)

@@ -41,7 +41,6 @@ export const createGame = async () => {
       cells
     })
 
-    console.log(game)
     return {
       game,
       cells
@@ -59,7 +58,7 @@ export const deleteGame = async (game) => {
       }
     })
 
-    console.log(data)
+    console.info(data)
   } catch (err) {
     console.log(err)
   }

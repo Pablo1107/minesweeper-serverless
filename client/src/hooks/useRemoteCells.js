@@ -21,7 +21,6 @@ export default function useRemoteCells(
         const game = window.location.pathname.substr(1)
         if (game) {
           let { cells, settings } = await getRemoteCells(game)
-          console.log(cells, settings)
 
           if (!cells) {
             console.log('No remote cells found, creating default cells...')
