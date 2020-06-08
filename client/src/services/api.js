@@ -3,24 +3,29 @@ import { getDefaultCells } from '../helpers/cells'
 
 export const getRemoteCells = async (game) => {
   try {
-    const { data: { cells } } = await axios.get(`/game`, {
+    const { data: { cells, settings } } = await axios.get(`/game`, {
       params: {
         game
       }
     })
 
-    return cells
+    return { cells, settings }
   } catch (err) {
     console.log(err)
+    return {
+      cells: null,
+      settings: null,
+    }
   }
 }
 
-export const setRemoteCells = async (cells, gameId) => {
+export const setRemoteCells = async (cells, gameId, settings) => {
   console.log('Setting remote cells...')
   try {
     const { data: { game } } = await axios.post(`/game`, {
       game: gameId || undefined,
-      cells
+      cells,
+      settings,
     })
 
     return game

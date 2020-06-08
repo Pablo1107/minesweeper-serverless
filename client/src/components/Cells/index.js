@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import useCells from '../../hooks/useCells'
-import { Wrapper, Code, CellsWrapper, Cell } from './components/Styled'
+import { Wrapper, CellsWrapper, Cell } from './components/Styled'
+import Context from '../../context'
 
 function Cells({ initialCells }) {
+  const { n, m } = useContext(Context)
   const [cells, gameOver, handleChange] = useCells(initialCells)
 
   if (gameOver) {
@@ -12,12 +14,7 @@ function Cells({ initialCells }) {
 
   return (
     <Wrapper>
-      <Code>
-        <h3>Local Cells</h3>
-
-        {JSON.stringify(cells)}
-      </Code>
-      <CellsWrapper>
+      <CellsWrapper n={n} m={m}>
         {cells.map((cell, i) =>
           <Cell key={i}
             index={i}

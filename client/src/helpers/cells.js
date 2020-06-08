@@ -1,10 +1,10 @@
-export const adjacentCells = (cell, cells) => {
+export const adjacentCells = (cell, cells, n) => {
   const adjCells = []
 
   const { x, y } = cell
   for (let i = x - 1; i <= x + 1; i++) {
     for (let j = y - 1; j <= y + 1; j++) {
-      const adjCell = getCell(i, j, cells)
+      const adjCell = getCell(i, j, cells, n)
       if (cell === adjCell) continue
       if (!adjCell) continue
 
@@ -14,16 +14,13 @@ export const adjacentCells = (cell, cells) => {
   return adjCells
 }
 
-export const getCell = (x, y, cells) => {
+export const getCell = (x, y, cells, n) => {
   if (x < 0 || y < 0) return null
-  return cells[y * 10 + x]
+  return cells[y * n + x]
 }
 
-export const getDefaultCells = () => {
+export const getDefaultCells = (n = 10, m = 10) => {
   const defaultCells = [];
-
-  const n = 10
-  const m = 10
 
   for (let i = 0; i < n * m; i++) {
     const y = Math.floor(i / n)
@@ -41,7 +38,7 @@ export const getDefaultCells = () => {
   }
 
   defaultCells.filter((c, i) => !c.mine).forEach(cell => {
-    cell.adjacentMines = adjacentCells(cell, defaultCells).filter(c => c.mine).length
+    cell.adjacentMines = adjacentCells(cell, defaultCells, n).filter(c => c.mine).length
   })
 
   return defaultCells

@@ -32,7 +32,7 @@ export const Code = styled.div`
 
 export const CellsWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(10, 1fr)
+  grid-template-columns: repeat(${props => props.n || 10}, 1fr);
 `
 
 export const Cell = styled.div`

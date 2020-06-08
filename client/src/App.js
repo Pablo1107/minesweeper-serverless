@@ -1,13 +1,15 @@
-import React from 'react';
-import axios from 'axios';
+import React from 'react'
+import axios from 'axios'
 import useRemoteCells from './hooks/useRemoteCells'
+import Context from './context'
 import { Wrapper } from './components/Styled'
+import Settings from './components/Settings'
 import Cells from './components/Cells'
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 function App() {
-  const [remoteCells, loading] = useRemoteCells()
+  const [remoteCells, loading, settings, setSettings] = useRemoteCells()
 
   if (loading) {
     return (
@@ -22,9 +24,12 @@ function App() {
   }
 
   return (
-    <Wrapper>
-      <Cells initialCells={remoteCells} />
-    </Wrapper>
+    <Context.Provider value={settings}>
+      <Wrapper>
+        <Settings settings={settings} onChange={setSettings} />
+        <Cells initialCells={remoteCells} />
+      </Wrapper>
+    </Context.Provider>
   );
 }
 

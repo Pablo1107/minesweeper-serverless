@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import useRemoteCells from './useRemoteCells'
 import { setRemoteCells, deleteGame } from '../services/api';
 import { adjacentCells } from '../helpers/cells';
+import Context from '../context'
 
 export default function useCells(defaultValue) {
+  const settings = useContext(Context)
+
   const [cells, setCells] = useState(defaultValue);
   const [gameOver, setGameOver] = useState(false);
   useRemoteCells(cells, setCells)
@@ -12,7 +15,7 @@ export default function useCells(defaultValue) {
     cell.state = 'uncovered'
     if (cell.adjacentMines === 0 && !cell.mine) {
       console.log('Checking adjacentZeros')
-      adjacentCells(cell, newCells).forEach(adjCell => {
+      adjacentCells(cell, newCells, settings.n).forEach(adjCell => {
         if (adjCell.state === 'covered') {
           uncoverCell(adjCell, newCells)
         }
@@ -42,7 +45,7 @@ export default function useCells(defaultValue) {
     }
 
     if (!cell.mine) {
-      setRemoteCells(newCells, game)
+      setRemoteCells(newCells, game, settings)
       setCells(newCells)
     }
   }
