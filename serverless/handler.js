@@ -36,7 +36,7 @@ module.exports.hello = async (event, context, callback) => {
       ...commonHeaders,
       'Content-Type': 'text/plain',
     },
-    body: 'Helloooo'
+    body: 'Hello'
   })
 }
 
@@ -49,7 +49,7 @@ module.exports.getGame = async (event, context, callback) => {
     console.log('Game: ' + game)
 
     if (!game) {
-      handleGenericError(null, callback, 'No game in query', 401) 
+      handleGenericError(null, callback, 'No game in query', 401)
       return
     }
 
@@ -87,9 +87,10 @@ module.exports.storeGame = async (event, context, callback) => {
     const body = JSON.parse(event.body)
     const game = body.game || shortid.generate()
     const cells = body.cells
+    const settings = body.settings
 
     if (!cells) {
-      handleGenericError(null, callback, 'No cells in request body', 401) 
+      handleGenericError(null, callback, 'No cells in request body', 401)
       return
     }
 
@@ -99,10 +100,11 @@ module.exports.storeGame = async (event, context, callback) => {
       TableName: tableName,
       Item: {
         game,
-        cells
+        cells,
+        settings,
       },
     }).promise()
-    
+
     callback(null, {
       statusCode: 200,
       headers: {
@@ -126,7 +128,7 @@ module.exports.deleteGame = async (event, context, callback) => {
     console.log('Game: ' + game)
 
     if (!game) {
-      handleGenericError(null, callback, 'No game in query', 401) 
+      handleGenericError(null, callback, 'No game in query', 401)
       return
     }
 
