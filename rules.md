@@ -24,7 +24,7 @@ are still covered, and a player can click on it to uncover it, like a normal
 covered cell. 
 
  - [X] Create board
-   - [ ] Create an array of n x m cells
+   - [X] Create an array of n x m cells
    - [X] Each cell has three states: uncovered, covered, flagged
      - covered: is blank and clickable
      - uncovered: is exposed, contains a number (mines adjacent to it), or a mine
