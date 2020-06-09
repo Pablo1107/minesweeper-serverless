@@ -8,6 +8,7 @@ export default function useCells(defaultValue) {
   const settings = useContext(Context)
 
   const [cells, setCells] = useState(defaultValue);
+  const [playerWon, setPlayerWon] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   useRemoteCells(cells, setCells)
 
@@ -20,6 +21,23 @@ export default function useCells(defaultValue) {
           uncoverCell(adjCell, newCells)
         }
       })
+    }
+  }
+
+  const flagCell = (cell, newCells) => {
+    cell.state = cell.state === 'flagged' ? 'covered' : 'flagged'
+  }
+
+  const checkWinningState = (newCells, game) => {
+    const hasUnflaggedMines =
+      !!newCells.filter(c => c.mine && c.state !== 'flagged').length
+
+    const hasFlaggedNotMines =
+      !!newCells.filter(c => !c.mine && c.state === 'flagged').length
+
+    if (!hasUnflaggedMines && !hasFlaggedNotMines) {
+      setPlayerWon(true)
+      deleteGame(game)
     }
   }
 
@@ -39,16 +57,15 @@ export default function useCells(defaultValue) {
       }
       uncoverCell(cell, newCells)
     } else if (type === 'contextmenu') {
-      newCells[i] = {
-        state: 'flagged'
-      }
+      flagCell(cell, newCells)
     }
 
-    if (!cell.mine) {
+    if (!cell.mine || type === 'contextmenu') {
+      checkWinningState(newCells, game)
       setRemoteCells(newCells, game, settings)
       setCells(newCells)
     }
   }
 
-  return [cells, gameOver, handleChange]
+  return [cells, playerWon, gameOver, handleChange]
 }

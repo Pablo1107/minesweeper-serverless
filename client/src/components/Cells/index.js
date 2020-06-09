@@ -6,7 +6,11 @@ import Context from '../../context'
 
 function Cells({ initialCells }) {
   const { n, m } = useContext(Context)
-  const [cells, gameOver, handleChange] = useCells(initialCells)
+  const [cells, playerWon, gameOver, handleChange] = useCells(initialCells)
+
+  if (playerWon) {
+    return <div>You Win!</div>
+  }
 
   if (gameOver) {
     return <div>Game Over!</div>
@@ -24,9 +28,9 @@ function Cells({ initialCells }) {
             onContextMenu={handleChange(i)}
           >
             {{
-              'covered': cell.mine ? 'M' : '',
+              'covered': '',
               'uncovered': cell.adjacentMines > 0 && cell.adjacentMines,
-              'flagged': 'f',
+              'flagged': 'F',
             }[cell.state]}
           </Cell>
         )}

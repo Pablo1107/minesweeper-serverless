@@ -28,7 +28,7 @@ export const getDefaultCells = (n = 10, m = 10) => {
     defaultCells[i] = {
       x, y,
       state: 'covered', // uncovered, covered, flagged
-      mine: Math.random() <= 0.15 ? true : false
+      mine: Math.random() <= 0.12 ? true : false
     }
   }
 
